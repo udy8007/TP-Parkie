@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkie - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#00d2ff',
+                            DEFAULT: '#3a7bd5',
+                            dark: '#0052d4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            height: 100vh;
+            overflow: hidden;
+        }
+        .content-area {
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
+            padding-bottom: 4rem;
+        }
+        .nav-item.active {
+            color: #3a7bd5;
+        }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #3a7bd5;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#00d2ff] to-[#3a7bd5]">
+    <!-- Top Status Bar -->
+    <div class="fixed top-0 left-0 right-0 h-12 glass-card shadow-sm z-40">
+        <div class="container mx-auto px-4 h-full flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <img src="logo.png" alt="Parkie Logo" class="w-8 h-8">
+                <span class="font-semibold text-gray-800">Parkie</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <button class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                        <i class="fas fa-globe"></i>
+                    </button>
+                </div>
+                <div class="relative">
+                    <button class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600" onclick="showNotificationPopup()">
+                        <i class="fas fa-bell"></i>
+                        <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">3</span>
+                    </button>
+                </div>
+                <div class="relative">
+                    <a href="profile.html" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-area mt-12">
+        <div class="container mx-auto px-4 py-6">
+            <!-- Welcome Section -->
+            <div class="text-white mb-6">
+                <h1 class="text-2xl font-bold">Welcome back, John!</h1>
+                <p class="text-white/80 text-sm">Standard User</p>
+            </div>
+
+              <!-- Quick Stats -->
+              <div class="grid grid-cols-2 gap-4 mb-6">
+                <div class="glass-card rounded-xl p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <p class="text-gray-600 text-sm">Car Parking</p>
+                            <p class="text-3xl font-bold text-primary">98</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center text-green-500">
+                            <i class="fas fa-car text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-primary rounded-full" style="width: 78%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">78% availability</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-xl p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <p class="text-gray-600 text-sm">Bike Parking</p>
+                            <p class="text-3xl font-bold text-primary">27</p>
+                        </div>
+                        <div class="w-12 h-12 rounded-lg bg-green-100 flex items-center justify-center text-green-500">
+                            <i class="fas fa-motorcycle text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div class="h-full bg-primary rounded-full" style="width: 90%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">90% availability</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Booking -->
+            <div class="glass-card rounded-xl p-4 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold text-gray-800">Current Booking</h2>
+                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Active</span>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-parking text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-800 font-medium">Downtown Parking</p>
+                            <p class="text-gray-600 text-sm">Spot A-24</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-clock text-xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-800 font-medium">2 hours 15 minutes</p>
+                            <p class="text-gray-600 text-sm">Ends at 12:45 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 mt-4">
+                        <a href="map.html" class="flex-1 py-2 bg-primary text-white rounded-lg text-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>View on Map
+                        </a>
+                        <button onclick="showExtendTimePopup()" class="flex-1 py-2 bg-white text-primary border border-primary rounded-lg">
+                            <i class="fas fa-clock mr-2"></i>Extend Time
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extend Time Popup -->
+            <div id="extendTimePopup" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+                <div class="glass-card rounded-xl p-6 w-full max-w-md mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Extend Parking Time</h3>
+                        <button onclick="hideExtendTimePopup()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Current End Time</label>
+                            <p class="text-gray-800 font-medium">12:45 PM</p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Extend By</label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10">
+                                <option value="30">30 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="90">1.5 hours</option>
+                                <option value="120">2 hours</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-2 mt-6">
+                            <button onclick="hideExtendTimePopup()" class="flex-1 py-2 bg-white text-gray-600 border border-gray-200 rounded-lg">
+                                Cancel
+                            </button>
+                            <button class="flex-1 py-2 bg-primary text-white rounded-lg">
+                                Confirm Extension
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cancel Booking Popup -->
+            <div id="cancelBookingPopup" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+                <div class="glass-card rounded-xl p-6 w-full max-w-md mx-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Cancel Booking</h3>
+                        <button onclick="hideCancelBookingPopup()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                            <div class="flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-sm text-yellow-700">
+                                        Cancelling within 1 hour of booking time may result in a penalty.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Booking Details</label>
+                            <div class="bg-gray-50 rounded-lg p-3">
+                                <p class="text-gray-800 font-medium">Downtown Parking - Spot A-24</p>
+                                <p class="text-gray-600 text-sm">Today, 2:30 PM - 4:30 PM</p>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Reason for Cancellation</label>
+                            <select class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10">
+                                <option value="">Select a reason</option>
+                                <option value="change-plans">Change of plans</option>
+                                <option value="found-alternative">Found alternative parking</option>
+                                <option value="no-longer-needed">No longer needed</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-2 mt-6">
+                            <button onclick="hideCancelBookingPopup()" class="flex-1 py-2 bg-white text-gray-600 border border-gray-200 rounded-lg">
+                                Cancel
+                            </button>
+                            <button onclick="confirmCancellation()" class="flex-1 py-2 bg-red-500 text-white rounded-lg">
+                                Confirm Cancellation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Quick Actions -->
+             <div class="glass-card rounded-xl p-4 mb-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <a href="book-slot.html" class="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex flex-col items-center gap-2">
+                            <i class="fas fa-calendar-plus text-2xl text-primary"></i>
+                            <span class="text-sm font-medium text-gray-700">Book a slot</span>
+                        </div>
+                    </a>
+                    <a href="availability.html" class="flex flex-col items-center gap-2 p-4 bg-primary/10 rounded-xl hover:bg-primary/20 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                            <i class="fas fa-search text-xl"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-800">Check availability</span>
+                    </a>
+                    <a href="my-bookings.html" class="flex flex-col items-center gap-2 p-4 bg-primary/10 rounded-xl hover:bg-primary/20 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                            <i class="fas fa-list text-xl"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-800">My bookings</span>
+                    </a>
+                    <button onclick="showCancelBookingPopup()" class="flex flex-col items-center gap-2 p-4 bg-primary/10 rounded-xl hover:bg-primary/20 transition-colors">
+                        <div class="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                            <i class="fas fa-times-circle text-xl"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-800">Cancel booking</span>
+                    </button>
+                </div>
+            </div>
+          
+            <!-- Upcoming Reservation -->
+            <div class="glass-card rounded-xl p-4 mb-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Upcoming Reservation</h2>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-800 font-medium">Downtown Parking</p>
+                            <p class="text-gray-600 text-sm">Today, 2:30 PM - 4:30 PM</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="flex-1 py-2 bg-primary text-white rounded-lg">Edit</button>
+                        <button class="flex-1 py-2 bg-white text-red-500 border border-red-500 rounded-lg">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usage Analytics -->
+            <div class="glass-card rounded-xl p-4 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold text-gray-800">Usage Analytics</h2>
+                    <div class="flex gap-2">
+                        <button class="px-3 py-1 bg-primary text-white rounded-lg text-sm">Day</button>
+                        <button class="px-3 py-1 bg-white text-gray-600 border border-gray-200 rounded-lg text-sm">Week</button>
+                        <button class="px-3 py-1 bg-white text-gray-600 border border-gray-200 rounded-lg text-sm">Month</button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-gray-50 rounded-lg p-3">
+                        <p class="text-gray-600 text-sm mb-1">Total Bookings</p>
+                        <p class="text-2xl font-bold text-primary">247</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3">
+                        <p class="text-gray-600 text-sm mb-1">Utilization</p>
+                        <p class="text-2xl font-bold text-green-500">78%</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3">
+                        <p class="text-gray-600 text-sm mb-1">No-shows</p>
+                        <p class="text-2xl font-bold text-red-500">12</p>
+                    </div>
+                </div>
+
+                <div class="h-48">
+                    <canvas id="usageChart"></canvas>
+                </div>
+            </div>
+
+            <!-- My Vehicles -->
+            <div class="glass-card rounded-xl p-4 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold text-gray-800">My Vehicles</h2>
+                    <button class="text-primary text-sm font-medium">
+                        <i class="fas fa-plus mr-1"></i> Add Vehicle
+                    </button>
+                </div>
+                <div class="space-y-3">
+                    <div class="p-3 bg-gray-50 rounded-lg">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-car text-primary"></i>
+                                <span class="font-medium">Toyota Camry</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="text-primary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="text-red-500">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-600">
+                            <p>License: ABC123</p>
+                            <p>Preferred Zone: A</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="glass-card rounded-xl p-4 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold text-gray-800">Recent Activity</h2>
+                    <button class="text-primary text-sm font-medium">View All</button>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-800 font-medium">Sarah Johnson added to Admin role</p>
+                            <p class="text-gray-500 text-sm">Today, 11:32 AM</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-500">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-800 font-medium">Zone C maintenance completed</p>
+                            <p class="text-gray-500 text-sm">Today, 10:15 AM</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500">
+                            <i class="fas fa-broom"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-gray-800 font-medium">Zone B spots 15-20 blocked for cleaning</p>
+                            <p class="text-gray-500 text-sm">Yesterday, 4:45 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification Popup -->
+            <div id="notificationPopup" class="fixed top-16 right-4 w-80 glass-card rounded-xl shadow-lg hidden z-50">
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Notifications</h3>
+                        <button onclick="hideNotificationPopup()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        <!-- Notification Item 1 -->
+                        <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-500">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-gray-800 font-medium">Sarah Johnson added to Admin role</p>
+                                <p class="text-gray-500 text-sm">Today, 11:32 AM</p>
+                            </div>
+                        </div>
+                        <!-- Notification Item 2 -->
+                        <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-500">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-gray-800 font-medium">Zone C maintenance completed</p>
+                                <p class="text-gray-500 text-sm">Today, 10:15 AM</p>
+                            </div>
+                        </div>
+                        <!-- Notification Item 3 -->
+                        <div class="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                            <div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-500">
+                                <i class="fas fa-broom"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-gray-800 font-medium">Zone B spots 15-20 blocked for cleaning</p>
+                                <p class="text-gray-500 text-sm">Yesterday, 4:45 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <button class="w-full py-2 bg-primary text-white rounded-lg">
+                            Mark all as read
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="fixed bottom-0 left-0 right-0 glass-card shadow-lg">
+        <div class="container mx-auto">
+            <div class="flex justify-around items-center h-16">
+                <a href="#" class="nav-item active flex flex-col items-center justify-center relative">
+                    <i class="fas fa-home text-xl"></i>
+                    <span class="text-xs mt-1">Home</span>
+                </a>
+                <a href="book-slot.html" class="nav-item flex flex-col items-center justify-center relative">
+                    <i class="fas fa-parking text-xl"></i>
+                    <span class="text-xs mt-1">Park</span>
+                </a>
+                <a href="my-bookings.html" class="nav-item flex flex-col items-center justify-center relative">
+                    <i class="fas fa-calendar-check text-xl"></i>
+                    <span class="text-xs mt-1">Bookings</span>
+                </a>
+                <a href="chatbot.html" class="nav-item flex flex-col items-center justify-center relative">
+                    <i class="fas fa-robot text-xl"></i>
+                    <span class="text-xs mt-1">Assistant</span>
+                </a>
+                <a href="profile.html" class="nav-item flex flex-col items-center justify-center relative">
+                    <i class="fas fa-user text-xl"></i>
+                    <span class="text-xs mt-1">Profile</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Notification Popup Functions
+        function showNotificationPopup() {
+            document.getElementById('notificationPopup').classList.remove('hidden');
+        }
+
+        function hideNotificationPopup() {
+            document.getElementById('notificationPopup').classList.add('hidden');
+        }
+
+        // Close notification popup when clicking outside
+        document.addEventListener('click', function(e) {
+            const notificationPopup = document.getElementById('notificationPopup');
+            const bellIcon = document.querySelector('.fa-bell').closest('button');
+            
+            if (!notificationPopup.contains(e.target) && !bellIcon.contains(e.target)) {
+                hideNotificationPopup();
+            }
+        });
+
+        // Extend Time Popup Functions
+        function showExtendTimePopup() {
+            document.getElementById('extendTimePopup').classList.remove('hidden');
+            document.getElementById('extendTimePopup').classList.add('flex');
+        }
+
+        function hideExtendTimePopup() {
+            document.getElementById('extendTimePopup').classList.add('hidden');
+            document.getElementById('extendTimePopup').classList.remove('flex');
+        }
+
+        // Cancel Booking Popup Functions
+        function showCancelBookingPopup() {
+            document.getElementById('cancelBookingPopup').classList.remove('hidden');
+            document.getElementById('cancelBookingPopup').classList.add('flex');
+        }
+
+        function hideCancelBookingPopup() {
+            document.getElementById('cancelBookingPopup').classList.add('hidden');
+            document.getElementById('cancelBookingPopup').classList.remove('flex');
+        }
+
+        function confirmCancellation() {
+            // Here you would typically make an API call to cancel the booking
+            alert('Booking cancelled successfully!');
+            hideCancelBookingPopup();
+        }
+
+        // Close popups when clicking outside
+        document.getElementById('extendTimePopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideExtendTimePopup();
+            }
+        });
+
+        document.getElementById('cancelBookingPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideCancelBookingPopup();
+            }
+        });
+
+        // Usage Analytics Chart
+        const ctx = document.getElementById('usageChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['6AM', '9AM', '12PM', '3PM', '6PM', '9PM', '12AM'],
+                datasets: [{
+                    label: 'Parking Usage',
+                    data: [45, 85, 95, 80, 70, 40, 20],
+                    borderColor: '#3a7bd5',
+                    backgroundColor: 'rgba(58, 123, 213, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

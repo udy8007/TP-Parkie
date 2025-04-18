@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parkie - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#00d2ff',
+                            DEFAULT: '#3a7bd5',
+                            dark: '#0052d4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center p-4 sm:p-6 bg-gradient-to-br from-[#00d2ff] to-[#3a7bd5] relative overflow-hidden">
+    <!-- Background wave effect -->
+    <div class="absolute -bottom-1/4 -right-1/4 w-full h-full bg-gradient-to-br from-[#0052d4] via-[#4364f7] to-[#6fb1fc] rounded-full -rotate-15 opacity-70 z-0"></div>
+
+    <div class="container w-full max-w-[320px] sm:max-w-[380px] md:max-w-[440px] mx-auto relative z-10 flex flex-col gap-4 sm:gap-6">
+        <!-- Header -->
+        <div class="text-center mb-2 sm:mb-4">
+            <img src="logo.png" alt="Parkie Logo" class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-4 sm:mb-6 drop-shadow-lg">
+            <h1 class="text-3xl sm:text-4xl font-bold text-white mb-2 drop-shadow">Parkie</h1>
+            <p class="text-white/90 text-base sm:text-lg drop-shadow">Welcome back! Please login to your account</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-xl">
+            <form class="space-y-4 sm:space-y-6">
+                <div class="space-y-2">
+                    <label for="email" class="block text-gray-700 font-medium text-sm sm:text-base">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email"
+                        class="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition bg-white/90 text-sm sm:text-base">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="password" class="block text-gray-700 font-medium text-sm sm:text-base">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password"
+                        class="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/10 transition bg-white/90 text-sm sm:text-base">
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="remember" class="rounded border-gray-300 text-primary focus:ring-primary">
+                        <span class="ml-2 text-gray-700 text-sm sm:text-base">Remember me</span>
+                    </label>
+                    <a href="forgot-password.html" class="text-primary hover:text-primary-dark transition text-sm sm:text-base">Forgot Password?</a>
+                </div>
+
+                <button type="submit" onclick="window.location.href='dashboard.html'"
+                    class="w-full py-3 bg-gradient-to-r from-primary-dark to-primary text-white font-medium rounded-lg hover:translate-y-[-2px] hover:shadow-lg transition duration-300">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Social Login -->
+            <div class="mt-6 sm:mt-8 text-center">
+                <p class="text-gray-600 mb-4 text-sm sm:text-base">Or login with</p>
+                <div class="flex justify-center gap-3 sm:gap-4">
+                    <button class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-md hover:translate-y-[-2px] hover:shadow-lg transition duration-300">
+                        <i class="fab fa-google text-sm sm:text-base"></i>
+                    </button>
+                    <button class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-md hover:translate-y-[-2px] hover:shadow-lg transition duration-300">
+                        <i class="fab fa-microsoft text-sm sm:text-base"></i>
+                    </button>
+                    <button class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-md hover:translate-y-[-2px] hover:shadow-lg transition duration-300">
+                        <i class="fab fa-apple text-sm sm:text-base"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign Up Link -->
+        <div class="bg-white/10 backdrop-blur px-4 sm:px-6 py-3 sm:py-4 rounded-lg text-center text-white text-sm sm:text-base">
+            Don't have an account? 
+            <a href="signup.html" class="inline-block ml-1 sm:ml-2 px-3 sm:px-4 py-1 sm:py-1.5 bg-white/20 hover:bg-white/30 rounded-full font-semibold transition">
+                Sign up
+            </a>
+        </div>
+    </div>
+</body>
+</html> 
