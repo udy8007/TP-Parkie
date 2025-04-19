@@ -36,7 +36,7 @@
 
         <!-- Login Form -->
         <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-xl">
-            <form class="space-y-4 sm:space-y-6">
+            <form id="loginForm" class="space-y-4 sm:space-y-6">
                 <div class="space-y-2">
                     <label for="email" class="block text-gray-700 font-medium text-sm sm:text-base">Email</label>
                     <input type="email" id="email" placeholder="Enter your email" value="udhayakumar.k@thinkpalm.com"
@@ -57,7 +57,7 @@
                     <a href="forgot-password.html" class="text-primary hover:text-primary-dark transition text-sm sm:text-base">Forgot Password?</a>
                 </div>
 
-                <button type="submit" onclick="window.location.href='dashboard.html'"
+                <button type="submit"
                     class="w-full py-3 bg-gradient-to-r from-primary-dark to-primary text-white font-medium rounded-lg hover:translate-y-[-2px] hover:shadow-lg transition duration-300">
                     Sign In
                 </button>
@@ -88,5 +88,12 @@
             </a>
         </div>
     </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you can add your authentication logic
+            window.location.href = 'dashboard.html';
+        });
+    </script>
 </body>
 </html> 
